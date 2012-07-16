@@ -10,5 +10,6 @@
   },
   "permissions": [
     "unlimitedStorage"
-  ]
+  ],
+  "manifest_version": 2
 }
