@@ -8,29 +8,31 @@
 	<body>
 		<section id="app">
 			<section id="editor">
-				<div id="gradient-preview"></div>
+				<div id="gradient-preview">
+					<div class="transparency"></div>
+					<div class="gradient"></div>
+				</div>
 				<div id="gradient-slider">
 					<div class="color-stops">
-						<div class="color-stop" data-color="red" data-pos="0"></div>
-						<div class="color-stop" data-color="green" data-pos="100"></div>
+						<div class="color-stop" style="background: red; left: 0"></div>
+						<div class="color-stop" style="background: green; left: 356px"></div>
 					</div>
 					<div class="track"></div>
 				</div>
 				<div id="color-stop-settings">
 					<div class="alpha">
 						<h3>Alpha</h3>
-						<input type="number" min="0" max="100">
+						<input type="number" min="0" max="100" value="100">
 					</div>
 					<div class="color">
 						<h3>Color</h3>
-						<input type="text" maxlength="7">
+						<input type="text" maxlength="7" value="#BADA55">
 					</div>
 					<div class="position">
 						<h3>Position</h3>
-						<input type="number" min="0" max="100">
+						<input type="number" min="0" max="100" value="100">
 					</div>
 					<div class="remove">
-						<h3>Remove</h3>
 						<button>X</button>
 					</div>
 				</div>
@@ -57,7 +59,7 @@
 				</div>
 				<div id="layers">
 					<div class="layer selected">
-						<div class="preview" style="background: green"></div>
+						<div class="preview" style="background: #4e9a06"></div>
 						<div class="visible"></div>
 						<div class="name">Green Button</div>
 					</div>
@@ -67,7 +69,7 @@
 						<div class="name">Red Button</div>
 					</div>
 					<div class="layer disabled">
-						<div class="preview" style="background: blue"></div>
+						<div class="preview" style="background: lightblue"></div>
 						<div class="visible"></div>
 						<div class="name">Blue Button</div>
 					</div>
