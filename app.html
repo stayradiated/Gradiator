@@ -5,4 +5,74 @@
 		<link rel="stylesheet" href="css/style.css">
 		<script src="scripts/app.js"></script>
 	</head>
+	<body>
+		<section id="app">
+			<section id="editor">
+				<div id="gradient-preview"></div>
+				<div id="gradient-slider">
+					<div class="color-stops">
+						<div class="color-stop" data-color="red" data-pos="0"></div>
+						<div class="color-stop" data-color="green" data-pos="100"></div>
+					</div>
+					<div class="track"></div>
+				</div>
+				<div id="color-stop-settings">
+					<div class="alpha">
+						<h3>Alpha</h3>
+						<input type="number" min="0" max="100">
+					</div>
+					<div class="color">
+						<h3>Color</h3>
+						<input type="text" maxlength="7">
+					</div>
+					<div class="position">
+						<h3>Position</h3>
+						<input type="number" min="0" max="100">
+					</div>
+					<div class="remove">
+						<h3>Remove</h3>
+						<button>X</button>
+					</div>
+				</div>
+				<div id="gradient-settings">
+					<div class="switch">
+						<div class="linear">Linear</div>
+						<div class="radial">Radial</div>
+					</div>
+					<div class="dial"></div>
+				</div>
+				<div id="gradient-output"></div>
+				<button class="settings">Settings</button>
+				<button class="get-code">Copy CSS</button>
+			</section>
+			<section id="sidebar">
+				<div id="top-bar">
+					<div class="opacity">
+						<span>Opacity</span>
+						<div class="number-input">
+							<input type="number" min="0" max="100" value="100">
+							<div class="trigger"></div>
+						</div>
+					</div>
+				</div>
+				<div id="layers">
+					<div class="layer">
+						<div class="layer-preview"></div>
+						<div class="visible"></div>
+						<div class="name">Red Button</div>
+					</div>
+					<div class="layer">
+						<div class="layer-preview"></div>
+						<div class="visible"></div>
+						<div class="name">Blue Button</div>
+					</div>
+				</div>
+				<div id="bottom-bar">
+					<button class="add-layer">+</button>
+					<button class="add-adjustment-layer">O</button>
+					<button class="remove-layer">X</button>
+				</div>
+			</section>
+		</section>
+	</body>
 </html>
