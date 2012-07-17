@@ -1,3 +1,5 @@
+@import "compass/css3"
+
 // Normalize
 
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary
@@ -212,22 +214,34 @@ p, pre, dl, menu, ol, ul
 
 // Gradiator
 
+// Reset number inputs
+input[type=number]
+	-webkit-appearance: none
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button
+		-webkit-appearance: none
+		margin: 0
+
 // Colors and Backgrounds
 $bg_editor: #333
 $bg_sidebar: url(../images/bg_sidebar.png)
 $bg_sidebar_bottom_bar: url(../images/bg_sidebar_bottom_bar.png)
 
-// Fonts
 body
 	font-size: 13px
 	overflow: hidden
 
+	// Disable selection
+	*:not(input)
+		-webkit-user-select: none
+		cursor: default
 
 // App
 #app
 	@include center(572px, 406px)
 	// Temporary
 	outline: 3px solid hotpink
+
 
 
 // Gradient Editor
@@ -255,7 +269,7 @@ body
 
 	// Layers container
 	#layers
-		@include absolute(32px, 24px, 0, 0)
+		@include absolute(36px, 24px, 0, 0)
 
 	// Bottom bar
 	.bottom-bar
@@ -265,11 +279,81 @@ body
 		background: $bg_sidebar_bottom_bar
 		@include absolute(auto, 0, 0, 0)
 		padding: 0 10px
+		font-size: 0
+
+		// Buttons
+		button
+			-webkit-appearance: none
+			border: none
+			width: 20px
+			margin: 0 5px
+			cursor: default
+			height: $height
+
+			&:first-child
+				margin-left: 0
+
+			&.add-layer
+				background: url(../images/icon_add_layer.png) no-repeat 50% 50%
+
+			&.add-adjustment-layer
+				background: url(../images/icon_add_adjustment.png) no-repeat 50% 50%
+
+			&.remove-layer
+				background: url(../images/icon_remove_layer.png) no-repeat 50% 50%
+				float: right
+				margin-right: 0
+
 
 	// Opacity
 	.opacity
+		float: right
+		margin: 6px 7px 0 0
+		font-size: 11px
+		text-shadow: 0 1px 0 #fff
+		color: #1a1a1a
+
 		.number-input
 			display: inline-block
+			$height: 16px
+			$border: #b3b3b3
+			font-size: 0
+
+			input
+				border-radius: 2px 0 0 2px
+				border: 1px solid $border
+				height: $height
+				line-height: 1
+				padding: 0
+				width: 32px
+				text-indent: 5px
+				margin-top: 0.5px
+				font-size: 11px
+
+				&:focus
+					outline: none
+
+			// The part you click to show the slider
+			.trigger
+				border-radius: 0 2px 2px 0
+				width: 9px
+				height: $height
+				background: #f2f2f2
+				display: inline-block
+				vertical-align: top
+				border: 1px solid $border
+				border-left: none
+				margin: 0
+
+				// Arrow icon
+				&:after
+					content: ''
+					display: block
+					width: 5px
+					height: 5px
+					margin: 6px 0 0 2px
+					background: url(../images/arrow.png) no-repeat
+
 
 // Layers
 #layers .layer
@@ -283,6 +367,21 @@ body
 	box-shadow: inset 0 -1px 0 $shadow, inset 0 1px 0 $shadow, inset -1px 0 0 $shadow, inset 1px 0 0 $shadow
 	margin: 3px 7px
 	position: relative
+	text-shadow: 0 1px 0 #fff
+	font-size: 0
+
+	@include background-image(linear-gradient(top, rgba(252, 252, 252, 0.30), rgba(249, 249, 249, 0.30)))
+	@include filter-gradient(rgba(252, 252, 252, 0.30), rgba(249, 249, 249, 0.30), vertical)
+
+
+	&.selected
+		@include background-image(linear-gradient(top, #fcfcfc, #f9f9f9))
+		@include filter-gradient(#fcfcfc, #f9f9f9, vertical)
+
+	&.disabled
+		.visible
+			background-image: url(../images/icon_eye_disabled.png)
+
 
 	.preview
 		width: 5px
@@ -290,11 +389,15 @@ body
 		border-radius: 5px 0 0 5px
 
 	.visible
-		width: 30px
+		margin: 0 6px 0 12px
+		width: 14px
 		height: $height
 		display: inline-block
+		background: url(../images/icon_eye.png) 0 9px no-repeat
 
 	.name
 		display: inline-block
 		vertical-align: top
 		font-weight: bold
+		color: #2d2d2d
+		font-size: 13px
