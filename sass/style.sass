@@ -1,186 +1,300 @@
+// Normalize
+
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary
-  display: block
+	display: block
 
 audio, canvas, video
-  display: inline
-  zoom: 1
+	display: inline
+	zoom: 1
 
 audio:not([controls])
-  display: none
-  height: 0
+	display: none
+	height: 0
 
 [hidden]
-  display: none
+	display: none
 
 html
-  font-size: 100%
-  -webkit-text-size-adjust: 100%
-  -ms-text-size-adjust: 100%
-  font-family: sans-serif
+	font-size: 100%
+	-webkit-text-size-adjust: 100%
+	-ms-text-size-adjust: 100%
+	font-family: sans-serif
 
 button, input, select, textarea
-  font-family: sans-serif
+	font-family: sans-serif
 
 a
-  &:focus
-    outline: thin dotted
-  &:hover, &:active
-    outline: 0
+	&:focus
+		outline: thin dotted
+	&:hover, &:active
+		outline: 0
 
 h1
-  font-size: 2em
-  margin: .67em 0
+	font-size: 2em
+	margin: .67em 0
 
 h2
-  font-size: 1.5em
-  margin: .83em 0
+	font-size: 1.5em
+	margin: .83em 0
 
 h3
-  font-size: 1.17em
-  margin: 1em 0
+	font-size: 1.17em
+	margin: 1em 0
 
 h4
-  font-size: 1em
-  margin: 1.33em 0
+	font-size: 1em
+	margin: 1.33em 0
 
 h5
-  font-size: .83em
-  margin: 1.67em 0
+	font-size: .83em
+	margin: 1.67em 0
 
 h6
-  font-size: .75em
-  margin: 2.33em 0
+	font-size: .75em
+	margin: 2.33em 0
 
 abbr[title]
-  border-bottom: 1px dotted
+	border-bottom: 1px dotted
 
 b, strong
-  font-weight: 700
+	font-weight: 700
 
 blockquote
-  margin: 1em 40px
+	margin: 1em 40px
 
 dfn
-  font-style: italic
+	font-style: italic
 
 mark
-  background: #ff0
-  color: #000
+	background: #ff0
+	color: #000
 
 pre, code, kbd, samp
-  font-family: monospace, serif
-  _font-family: 'courier new', monospace
-  font-size: 1em
+	font-family: monospace, serif
+	_font-family: 'courier new', monospace
+	font-size: 1em
 
 pre
-  white-space: pre-wrap
-  word-wrap: break-word
+	white-space: pre-wrap
+	word-wrap: break-word
 
 q
-  quotes: none
-  &:before, &:after
-    content: none
+	quotes: none
+	&:before, &:after
+		content: none
 
 small
-  font-size: 75%
+	font-size: 75%
 
 sub
-  font-size: 75%
-  line-height: 0
-  position: relative
-  vertical-align: baseline
+	font-size: 75%
+	line-height: 0
+	position: relative
+	vertical-align: baseline
 
 sup
-  font-size: 75%
-  line-height: 0
-  position: relative
-  vertical-align: baseline
-  top: -0.5em
+	font-size: 75%
+	line-height: 0
+	position: relative
+	vertical-align: baseline
+	top: -0.5em
 
 sub
-  bottom: -0.25em
+	bottom: -0.25em
 
 dd
-  margin: 0 0 0 40px
+	margin: 0 0 0 40px
 
 menu, ol, ul
-  padding: 0 0 0 40px
+	padding: 0 0 0 40px
 
 nav
-  ul, ol
-    list-style: none
-    list-style-image: none
+	ul, ol
+		list-style: none
+		list-style-image: none
 
 img
-  border: 0
-  -ms-interpolation-mode: bicubic
+	border: 0
+	-ms-interpolation-mode: bicubic
 
 svg:not(:root)
-  overflow: hidden
+	overflow: hidden
 
 fieldset
-  border: 1px solid silver
-  margin: 0 2px
-  padding: .35em .625em .75em
+	border: 1px solid silver
+	margin: 0 2px
+	padding: .35em .625em .75em
 
 legend
-  border: 0
-  white-space: normal
-  margin-left: -7px
-  padding: 0
+	border: 0
+	white-space: normal
+	margin-left: -7px
+	padding: 0
 
 button, input, select, textarea
-  font-size: 100%
-  vertical-align: middle
-  margin: 0
+	font-size: 100%
+	vertical-align: middle
+	margin: 0
 
 button, input
-  line-height: normal
+	line-height: normal
 
 button
-  cursor: pointer
-  -webkit-appearance: button
-  overflow: visible
+	cursor: pointer
+	-webkit-appearance: button
+	overflow: visible
 
 input
-  &[type=button], &[type=reset], &[type=submit]
-    cursor: pointer
-    -webkit-appearance: button
-    overflow: visible
+	&[type=button], &[type=reset], &[type=submit]
+		cursor: pointer
+		-webkit-appearance: button
+		overflow: visible
 
 button[disabled]
-  cursor: default
+	cursor: default
 
 input
-  &[disabled]
-    cursor: default
-  &[type=checkbox], &[type=radio]
-    box-sizing: border-box
-    height: 13px
-    width: 13px
-    padding: 0
-  &[type=search]
-    -webkit-appearance: textfield
-    -moz-box-sizing: content-box
-    -webkit-box-sizing: content-box
-    box-sizing: content-box
-    &::-webkit-search-decoration, &::-webkit-search-cancel-button
-      -webkit-appearance: none
+	&[disabled]
+		cursor: default
+	&[type=checkbox], &[type=radio]
+		box-sizing: border-box
+		height: 13px
+		width: 13px
+		padding: 0
+	&[type=search]
+		-webkit-appearance: textfield
+		-moz-box-sizing: content-box
+		-webkit-box-sizing: content-box
+		box-sizing: content-box
+		&::-webkit-search-decoration, &::-webkit-search-cancel-button
+			-webkit-appearance: none
 
 button::-moz-focus-inner, input::-moz-focus-inner
-  border: 0
-  padding: 0
+	border: 0
+	padding: 0
 
 textarea
-  overflow: auto
-  vertical-align: top
+	overflow: auto
+	vertical-align: top
 
 table
-  border-collapse: collapse
-  border-spacing: 0
+	border-collapse: collapse
+	border-spacing: 0
 
 body, figure, form
-  margin: 0
+	margin: 0
 
 p, pre, dl, menu, ol, ul
-  margin: 1em 0
+	margin: 1em 0
+
+// Mixins
+@mixin absolute($top, $bottom, $left, $right)
+	display: block
+	position: absolute
+	top: $top
+	bottom: $bottom
+	left: $left
+	right: $right
+
+@mixin center($width, $height)
+	width: $width
+	height: $height
+	position: absolute
+	top: 50%
+	left: 50%
+	display: block
+	margin-left: -$width / 2
+	margin-top: -$height / 2
+
+@mixin fancy-border($top, $bottom)
+	border-bottom: 1px solid $top
+	box-shadow: 0 1px 0 $bottom
+
+// Gradiator
+
+// Colors and Backgrounds
+$bg_editor: #333
+$bg_sidebar: url(../images/bg_sidebar.png)
+$bg_sidebar_bottom_bar: url(../images/bg_sidebar_bottom_bar.png)
+
+// Fonts
+body
+	font-size: 13px
+	overflow: hidden
+
+
+// App
+#app
+	@include center(572px, 406px)
+	// Temporary
+	outline: 3px solid hotpink
+
+
+// Gradient Editor
+#editor
+	background: $bg_editor
+	width: 398px
+	height: 100%
+	float: right
+
+
+// Sidebar
+#sidebar
+	background: $bg_sidebar
+	border-right: 1px solid #000
+	width: 173px
+	height: 100%
+	float: left
+	position: relative
+
+	// Top bar
+	.top-bar
+		height: 30px
+		@include absolute(0, auto, 0, 0)
+		@include fancy-border(#e6e6e6, #fff)
+
+	// Layers container
+	#layers
+		@include absolute(32px, 24px, 0, 0)
+
+	// Bottom bar
+	.bottom-bar
+		$height: 24px
+		height: $height
+		line-height: $height
+		background: $bg_sidebar_bottom_bar
+		@include absolute(auto, 0, 0, 0)
+		padding: 0 10px
+
+	// Opacity
+	.opacity
+		.number-input
+			display: inline-block
+
+// Layers
+#layers .layer
+	$height: 28px
+	height: $height
+	line-height: $height
+	border: 1px solid #e5e5e5
+	border-bottom-color: #d9d9d9
+	border-radius: 5px
+	$shadow: #fff
+	box-shadow: inset 0 -1px 0 $shadow, inset 0 1px 0 $shadow, inset -1px 0 0 $shadow, inset 1px 0 0 $shadow
+	margin: 3px 7px
+	position: relative
+
+	.preview
+		width: 5px
+		@include absolute(0, 0, 0, auto)
+		border-radius: 5px 0 0 5px
+
+	.visible
+		width: 30px
+		height: $height
+		display: inline-block
+
+	.name
+		display: inline-block
+		vertical-align: top
+		font-weight: bold
