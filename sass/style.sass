@@ -265,7 +265,7 @@ body
 
 // Gradient Preview
 #gradient-preview
-	height: 50px
+	height: 48px
 	border-radius: 5px 5px 0 0
 	border: 1px solid #2d2d2d
 	box-shadow: 0 1px 0 rgba(255,255,255,0.15), inset 0 1px 5px rgba(0,0,0,0.2), inset 0 0 2px rgba(0,0,0,0.2)
@@ -279,7 +279,7 @@ body
 		@include background(linear-gradient(left, rgba(138,226,52,0.6) 0%, #4e9a06 100%))
 
 	.transparency
-		background: url(../images/bg_transparent.png)
+		background: url(../images/bg_transparent.png) 0 0px
 
 
 // The Slider
@@ -447,6 +447,31 @@ body
 				background: #d7d7d7
 				box-shadow: 0 1px 1px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.6)
 				@include background(linear-gradient(top, #e3e3e3 0%, #d4d4d4 100%))
+
+// Buttons
+#editor > button
+	height: 26px
+	@include background(linear-gradient(top, #4c4f54 0%, #393b3f 100%))
+	box-shadow: 0 1px 1px rgba(0,0,0,0.17), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 0 2px rgba(255,255,255,0.2), inset 0 -1px 4px rgba(0,0,0,0.1)
+	border: 1px solid #1a1b1e
+	border-radius: 3px
+	color: #ccc
+	font-weight: bold
+	text-shadow: 0 1px 1px rgba(0,0,0,0.4)
+	font-size: 12px
+
+	&:hover
+		@include background(linear-gradient(top, #55585d 0%, #3f4245 100%))
+
+	&:active
+		@include background(linear-gradient(top, #34363a 0%, #46494d 100%))
+		box-shadow: 0 1px 0 rgba(255,255,255,0.1), inset 0 1px 3px rgba(0,0,0,0.3)
+
+	&.settings
+		width: 26px
+
+	&.get-code
+		width: 94px
 
 
 
