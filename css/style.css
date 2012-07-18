@@ -122,10 +122,18 @@ body *:not(input) { -webkit-user-select: none; cursor: default; }
 #color-stop-settings > div.position { width: 87px; }
 #color-stop-settings > div.position input { width: 44px; }
 #color-stop-settings > div.remove { width: 48px; }
+#color-stop-settings > div.remove button { width: 100%; height: 100%; background: url(../images/icon_delete_color_stop.png) no-repeat 50% 50%; }
 #color-stop-settings h3 { color: #999999; font-size: 12px; margin: 3px 0 1px; font-weight: 400; }
 #color-stop-settings input { border: none; padding: 0; margin: 0; line-height: 1; height: 25px; border-radius: 3px; text-align: center; background: transparent; color: white; font-weight: bold; font-family: "PT Sans"; font-size: 15px; }
 #color-stop-settings input:hover { background: rgba(255, 255, 255, 0.1); }
-#color-stop-settings input:focus { background: white; color: #333333; outline: none; }
+#color-stop-settings input:focus { background: white; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); color: #333333; outline: none; }
+#color-stop-settings button { border: 0; opacity: 0.7; -webkit-transition: opacity 0.15s; -moz-transition: opacity 0.15s; -ms-transition: opacity 0.15s; -o-transition: opacity 0.15s; transition: opacity 0.15s; }
+#color-stop-settings button:hover { opacity: 1; }
+
+#gradient-settings { margin-top: 15px; margin-bottom: 15px; }
+#gradient-settings .switch { width: 120px; height: 26px; border-radius: 3px; box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(0, 0, 0, 0.15); background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(0, 0, 0, 0.05)), color-stop(100%, rgba(255, 255, 255, 0.05))), url(../images/bg_switch.png); background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%), url(../images/bg_switch.png); background: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%), url(../images/bg_switch.png); background: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%), url(../images/bg_switch.png); background: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%), url(../images/bg_switch.png); background: linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%), url(../images/bg_switch.png); font-size: 0; }
+#gradient-settings .switch div { text-align: center; margin-top: 2px; line-height: 22px; font-size: 13px; font-weight: bold; color: #737373; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6); width: 56px; margin: 2px; display: inline-block; border-radius: 2px; }
+#gradient-settings .switch div.selected { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); color: #4c4c4c; background: #d7d7d7; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.6); background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e3e3e3), color-stop(100%, #d4d4d4)); background: -webkit-linear-gradient(top, #e3e3e3 0%, #d4d4d4 100%); background: -moz-linear-gradient(top, #e3e3e3 0%, #d4d4d4 100%); background: -o-linear-gradient(top, #e3e3e3 0%, #d4d4d4 100%); background: -ms-linear-gradient(top, #e3e3e3 0%, #d4d4d4 100%); background: linear-gradient(top, #e3e3e3 0%, #d4d4d4 100%); }
 
 #sidebar { background: url(../images/bg_sidebar.png); border-right: 1px solid black; width: 173px; height: 100%; float: left; position: relative; }
 #sidebar .top-bar { height: 30px; display: block; position: absolute; top: 0; bottom: auto; left: 0; right: 0; border-bottom: 1px solid #e6e6e6; box-shadow: 0 1px 0 white; }
