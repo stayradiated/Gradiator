@@ -107,7 +107,7 @@ body *:not(input) { -webkit-user-select: none; cursor: default; }
 #gradient-slider { margin-bottom: 20px; }
 #gradient-slider .color-stops { position: relative; }
 #gradient-slider .color-stops .color-stop { width: 16px; height: 16px; border-radius: 0 12px 12px 12px; -webkit-transform: rotate(45deg); -webkit-background-clip: padding-box; border: 2px solid black; position: absolute; top: -6px; cursor: default; font: 12px helvetica, sans-serif; color: red; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); margin-left: -8px; -webkit-transition: all 0.1s; }
-#gradient-slider .color-stops .color-stop.current { border-color: white; width: 20px; height: 20px; top: -8px; margin-left: -10px; }
+#gradient-slider .color-stops .color-stop.selected { border-color: white; width: 20px; height: 20px; top: -8px; margin-left: -10px; }
 #gradient-slider .color-stops .color-stop:hover { width: 20px; top: -8px; height: 20px; margin-left: -10px; }
 #gradient-slider .track { margin-top: 10px; height: 5px; background: rgba(0, 0, 0, 0.3); border-radius: 10px; box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(0, 0, 0, 0.25); }
 

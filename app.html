@@ -3,7 +3,12 @@
 	<head>
 		<title>Gradiator</title>
 		<link rel="stylesheet" href="css/style.css">
+		<script src="scripts/lib/jquery-1.7.2.min.js"></script>
 		<script src="scripts/app.js"></script>
+		<script src="scripts/core.js"></script>
+		<script src="scripts/ui.js"></script>
+		<script src="scripts/bind.js"></script>
+		<script src="scripts/init.js"></script>
 	</head>
 	<body>
 		<section id="app">
@@ -14,8 +19,8 @@
 				</div>
 				<div id="gradient-slider">
 					<div class="color-stops">
-						<div class="color-stop" style="background: red; left: 0"></div>
-						<div class="color-stop" style="background: green; left: 356px"></div>
+						<div class="color-stop" data-id="1" style="background: red; left: 0"></div>
+						<div class="color-stop" data-id="2" style="background: green; left: 356px"></div>
 					</div>
 					<div class="track"></div>
 				</div>
@@ -60,17 +65,17 @@
 					</div>
 				</div>
 				<div id="layers">
-					<div class="layer selected">
+					<div class="layer selected" data-id="1">
 						<div class="preview" style="background: #4e9a06"></div>
 						<div class="visible"></div>
 						<div class="name">Green Button</div>
 					</div>
-					<div class="layer">
+					<div class="layer" data-id="2">
 						<div class="preview" style="background: red"></div>
 						<div class="visible"></div>
 						<div class="name">Red Button</div>
 					</div>
-					<div class="layer disabled">
+					<div class="layer disabled" data-id="3">
 						<div class="preview" style="background: lightblue"></div>
 						<div class="visible"></div>
 						<div class="name">Blue Button</div>
