@@ -99,4 +99,51 @@ gradiator.init.push(function( app, undefined ) {
 		}
 	};
 
+	ui.settings = {
+		update: function ( stop ) {
+			$$.editor.settings.alpha.input.val( stop.alpha );
+		}
+	};
+
+
+	// Locals
+
+	// Templates
+	var templates = {
+		layer: _.template($('#layer-template').html()),
+		stop: _.template($('#color-stop-template').html())
+	};
+
+	// Draw a new layer
+	var draw = {
+		layer: function( obj ) {
+			switch (obj.type) {
+				case 'gradient':
+					return templates.layer({
+						id: obj.id,
+						name: obj.name
+					});
+				case 'color':
+					break;
+				case 'adjustment':
+					break;
+			}
+		},
+		stop: function( obj ) {
+			return templates.stop({
+				id: obj.id,
+				color: obj.getColor(),
+				pos: obj.getPos() + "px"
+			});
+		}
+	};
+	ui.add = {
+		layer: function( obj ) {
+			$$.sidebar.layers.el.append(draw.layer(obj));
+		},
+		stop: function( obj ) {
+			$$.editor.slider.stops.el.append(draw.stop(obj));
+		}
+	};
+
 });

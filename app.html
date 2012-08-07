@@ -4,6 +4,7 @@
 		<title>Gradiator</title>
 		<link rel="stylesheet" href="css/style.css">
 		<script src="scripts/lib/jquery-1.7.2.min.js"></script>
+		<script src="scripts/lib/underscore-min.js"></script>
 		<script src="scripts/app.js"></script>
 		<script src="scripts/core.js"></script>
 		<script src="scripts/ui.js"></script>
@@ -18,10 +19,7 @@
 					<div class="gradient"></div>
 				</div>
 				<div id="gradient-slider">
-					<div class="color-stops">
-						<div class="color-stop" data-id="1" style="background: red; left: 0"></div>
-						<div class="color-stop" data-id="2" style="background: green; left: 356px"></div>
-					</div>
+					<div class="color-stops"></div>
 					<div class="track"></div>
 				</div>
 				<div id="color-stop-settings">
@@ -64,23 +62,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="layers">
-					<div class="layer selected" data-id="1">
-						<div class="preview" style="background: #4e9a06"></div>
-						<div class="visible"></div>
-						<div class="name">Green Button</div>
-					</div>
-					<div class="layer" data-id="2">
-						<div class="preview" style="background: red"></div>
-						<div class="visible"></div>
-						<div class="name">Red Button</div>
-					</div>
-					<div class="layer disabled" data-id="3">
-						<div class="preview" style="background: lightblue"></div>
-						<div class="visible"></div>
-						<div class="name">Blue Button</div>
-					</div>
-				</div>
+				<div id="layers"></div>
 				<div class="bottom-bar">
 					<button class="add-layer" title="Add layer"></button>
 					<button class="add-adjustment-layer" title="Add adjustment layer"></button>
@@ -88,5 +70,16 @@
 				</div>
 			</section>
 		</section>
+		<!-- Templates -->
+		<script type="text/template" id="layer-template">
+			<div class="layer" data-id="<%= id %>">
+				<div class="preview"></div>
+				<div class="visible"></div>
+				<div class="name"><%= name %></div>
+			</div>
+		</script>
+		<script type="text/template" id="color-stop-template">
+			<div class="color-stop" data-id="<%= id %>" style="background: <%= color %>; left: <%= pos %>"></div>
+		</script>
 	</body>
 </html>

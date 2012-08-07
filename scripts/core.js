@@ -13,18 +13,66 @@ gradiator.init.push(function( app, undefined ) {
 
 	/* Constructors */
 
-	var Gradient = function() {
+	var Layer = function( _settings ) {
+
+		settings = defaults(_settings, {
+			name: 'New Layer',
+			type: 'gradient',
+			visible: true
+		});
+
 		this.stops = [];
-		this.addStop = function( color ) {
-			this.stops.push( new Stop( color ) );
-		};
 		this.id = layers.length + 1;
-		this.name = "New Gradient";
+		this.name = settings.name;
+		this.type = settings.type;
+		this.visible = settings.visible;
+
+		ui.add.layer(this);
+
 	};
 
-	var Stop = function( color ) {
-		color = color || 'blue';
-		this.color = color;
+	Layer.prototype.addStop = function( _settings ) {
+
+		settings = defaults(_settings, {
+			color: 'blue',
+			pos: 0
+		});
+
+		this.stops.push( new Stop( {
+			id: this.stops.length,
+			pos: settings.pos,
+			color: settings.color,
+			layer: this
+		}));
+
+	};
+
+	var Stop = function( settings ) {
+
+		this.layer = settings.layer;
+		this.id = settings.id;
+		this.color = {
+			a: 100,
+			r: 255,
+			g: 255,
+			b: 255
+		};
+		this.pos = settings.pos;
+
+		this.setColor = function() {
+
+		};
+		this.getColor = function() {
+			return this.color;
+		};
+
+		this.getPos = function() {
+			var max = ui.$$.editor.slider.el.width();
+			return this.pos * max / 100;
+		};
+
+		ui.add.stop(this);
+
 	};
 
 
@@ -48,13 +96,18 @@ gradiator.init.push(function( app, undefined ) {
 		}
 		return false;
 	};
-	var getStop = core.get.stop = function( id ) {
-		return id;
+	var getStop = core.get.stop = function( layer, id ) {
+		for (var i = 0; i <  layer.stops.length; i++) {
+			if (layer.stops[i].id == id) {
+				return layer.stops[i];
+			}
+		}
+		return false;
 	};
 
 	var select = core.select = {
 		layer: function( obj ) {
-			if (!(obj instanceof Gradient)) {
+			if (!(obj instanceof Layer)) {
 				obj = getLayer(obj);
 			}
 
@@ -64,21 +117,53 @@ gradiator.init.push(function( app, undefined ) {
 			}
 		},
 		stop: function( obj ) {
-			if (typeof(obj) == 'string') {
-				obj = getStop(obj);
-			}
-
 			selected.stop = obj;
 			ui.select.stop(obj);
 		}
 	};
 
+	// Utils
+
+	// Merges two objects with priority to user
+	var defaults = function( user, def ) {
+
+		if (user === undefined) return def;
+
+		var results = {};
+		for (var key in def) {
+			console.log(key, user.hasOwnProperty(key));
+			if (typeof(def[key]) == 'object') {
+				results[key] = def(user[key], def[key]);
+			} else if (user.hasOwnProperty(key)) {
+				results[key] = user[key];
+			} else {
+				results[key] = def[key];
+			}
+		}
+		console.log(user, def,results);
+		return results;
+
+	};
+
+	// Init
+
 	core.init = function() {
-		layers.push( new Gradient() );
-		layers.push( new Gradient() );
-		layers.push( new Gradient() );
+		layers.push( new Layer({name: 'Green Button'}) );
+		layers.push( new Layer({name: 'Red Button'}) );
+		layers.push( new Layer({name: 'Blue Button'}) );
 		select.layer( layers[0] );
-		layers[0].addStop( 'green' );
+		layers[0].addStop({
+			color: 'lightblue',
+			pos: 0
+		});
+		layers[0].addStop({
+			color: 'lightgreen',
+			pos: 100
+		});
+		layers[0].addStop({
+			color: 'red',
+			pos: 50
+		});
 	};
 
 });
