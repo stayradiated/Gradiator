@@ -25,7 +25,16 @@ gradiator.init.push(function( app, undefined ) {
 		this.id = layers.length + 1;
 		this.name = settings.name;
 		this.type = settings.type;
+
+		// Angle between 0 and 360
+		this.direction = 0;
+
+		// Layer visiblity
 		this.visible = settings.visible;
+		this.toggle = function() {
+			this.visible = !this.visible;
+			ui.layer(this).update();
+		};
 
 		ui.add.layer(this);
 
@@ -131,6 +140,33 @@ gradiator.init.push(function( app, undefined ) {
 				ui.select.stop(obj);
 			}
 		}
+	};
+
+	// Generate Gradient
+
+	var gradient = {
+		render: function ( _settings ) {
+			var settings = defaults(_settings, {
+				gradient: false,
+				template: [],
+				fallback: false,
+				colorFormat: 'hex'
+			});
+
+			// Gradient must be a Gradient object.
+
+			// Accepted templates:
+			// webkit, webkit_legacy, moz, ms, ms_legacy, o, standard, svg
+			// sass, scss, less
+
+			// Accepted fallbacks:
+			// false (no fallback), first, last, average
+
+			// Accepted colorFormats:
+			// hex, rgb, hsl
+
+		}
+
 	};
 
 	// Utils

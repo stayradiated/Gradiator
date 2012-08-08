@@ -15,8 +15,16 @@ gradiator.init.push(function(app, undefined) {
 		Sidebar
 	*****************************/
 
-	$$.sidebar.layers.el.on('click', '.layer', function() {
+	$$.sidebar.layers.el.on('click', '.layer', function(e) {
+
 		var id = $(this).data('id');
+
+		if ($(e.target).is('.visible')) {
+			var layer = core.get.layer(id);
+			layer.toggle();
+			return;
+		}
+
 		core.select.layer( id );
 	});
 

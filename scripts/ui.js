@@ -26,9 +26,12 @@ gradiator.init.push(function( app, undefined ) {
 					all: function() {
 						return $$.editor.slider.stops.el.find('.color-stop');
 					},
-					select: function( query ) {
+					get: function( id ) {
+						return $$.editor.slider.stops.el.find('[data-id='+id+']');
+					},
+					select: function( id ) {
 						$$.editor.slider.stops.selected().removeClass('selected');
-						var stop = $$.editor.slider.stops.el.find(query);
+						var stop = $$.editor.slider.stops.get(id);
 						stop.addClass('selected');
 						return stop;
 					}
@@ -64,6 +67,9 @@ gradiator.init.push(function( app, undefined ) {
 				},
 				selected: function() {
 					return $$.sidebar.layers.el.find('.selected');
+				},
+				get: function( id ) {
+					return $$.sidebar.layers.el.find('[data-id='+id+']');
 				}
 			},
 			buttons: {
@@ -93,7 +99,7 @@ gradiator.init.push(function( app, undefined ) {
 		stop: function( stop ) {
 
 			// Update 'selected' class name
-			$$.editor.slider.stops.select('[data-id=' + stop.id + ']');
+			$$.editor.slider.stops.select(stop.id);
 
 			// Update settings
 			ui.settings.update(stop);
@@ -106,6 +112,20 @@ gradiator.init.push(function( app, undefined ) {
 			$$.editor.settings.color.input.val( stop.getColor('hex') );
 			$$.editor.settings.position.input.val( stop.pos );
 		}
+	};
+
+	ui.layer = function( layer ) {
+		var el = $$.sidebar.layers.get(layer.id);
+		return {
+			update: function() {
+				console.log(layer.visible);
+				if (layer.visible) {
+					el.removeClass('disabled');
+				} else {
+					el.addClass('disabled');
+				}
+			}
+		};
 	};
 
 	ui.stop = function( stop ) {
