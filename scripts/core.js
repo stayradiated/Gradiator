@@ -61,8 +61,9 @@ gradiator.init.push(function( app, undefined ) {
 		this.setColor = function(color) {
 			this.color = Color.convert(color, 'object');
 		};
-		this.getColor = function() {
-			return Color.convert(this.color, 'rgba');
+		this.getColor = function(type) {
+			type = type || 'rgba';
+			return Color.convert(this.color, type);
 		};
 
 		// Set color
@@ -112,15 +113,19 @@ gradiator.init.push(function( app, undefined ) {
 			if (!(obj instanceof Layer)) {
 				obj = getLayer(obj);
 			}
-
 			if (obj) {
 				selected.layer = obj;
 				ui.select.layer(obj.id);
 			}
 		},
-		stop: function( obj ) {
-			selected.stop = obj;
-			ui.select.stop(obj);
+		stop: function( obj, layer ) {
+			if (!(obj instanceof Stop)) {
+				obj = getStop(obj, layer);
+			}
+			if (obj) {
+				selected.stop = obj;
+				ui.select.stop(obj);
+			}
 		}
 	};
 

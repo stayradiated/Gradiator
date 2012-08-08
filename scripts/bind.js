@@ -17,7 +17,7 @@ gradiator.init.push(function(app, undefined) {
 
 	$$.sidebar.layers.el.on('click', '.layer', function() {
 		var id = $(this).data('id');
-		core.select.layer(id);
+		core.select.layer( id );
 	});
 
 
@@ -27,7 +27,7 @@ gradiator.init.push(function(app, undefined) {
 
 	$$.editor.slider.stops.el.on('click', '.color-stop', function() {
 		var id = $(this).data('id');
-		core.select.stop(id);
+		core.select.stop( app.selected.layer, id );
 	});
 
 });

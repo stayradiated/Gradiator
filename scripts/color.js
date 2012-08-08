@@ -18,10 +18,9 @@
 		switch (outputFormat) {
 			case 'object':
 				output = color.toRgb();
-				console.log(input, output);
 				return output;
 			case 'hex':
-				return color.toHex();
+				return color.toHexString().toUpperCase();
 			case 'rgba':
 				return color.toRgbString();
 		}

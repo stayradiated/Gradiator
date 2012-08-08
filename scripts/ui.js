@@ -86,22 +86,25 @@ gradiator.init.push(function( app, undefined ) {
 			// Update 'selected' class name
 			$$.sidebar.layers.selected().removeClass('selected');
 			$$.sidebar.layers.el.find('[data-id=' + id + ']').addClass('selected');
-
-			console.log("Selecting layer: #" + id);
 		},
 
 		// Select a stop in a gradient
 		// id: [string|number] the ID of the stop
-		stop: function( id ) {
+		stop: function( stop ) {
 
 			// Update 'selected' class name
-			$$.editor.slider.stops.select('[data-id=' + id + ']');
+			$$.editor.slider.stops.select('[data-id=' + stop.id + ']');
+
+			// Update settings
+			ui.settings.update(stop);
 		}
 	};
 
 	ui.settings = {
 		update: function ( stop ) {
-			$$.editor.settings.alpha.input.val( stop.alpha );
+			$$.editor.settings.alpha.input.val( stop.color.a * 100 );
+			$$.editor.settings.color.input.val( stop.getColor('hex') );
+			$$.editor.settings.position.input.val( stop.pos );
 		}
 	};
 
