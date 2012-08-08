@@ -109,7 +109,7 @@ gradiator.init.push(function( app, undefined ) {
 	ui.settings = {
 		update: function ( stop ) {
 			$$.editor.settings.alpha.input.val( stop.color.a * 100 );
-			$$.editor.settings.color.input.val( stop.getColor('hex') );
+			$$.editor.settings.color.input.val( stop.get('color', 'hex') );
 			$$.editor.settings.position.input.val( stop.pos );
 		}
 	};
@@ -132,7 +132,7 @@ gradiator.init.push(function( app, undefined ) {
 		return {
 			move: function() {
 				var $stop = $$.editor.slider.stops.el.find('[data-id=' + stop.id + ']');
-				$stop.css('left', stop.getPos() + "px");
+				$stop.css('left', stop.get('pos'));
 			}
 		};
 	};
@@ -164,8 +164,8 @@ gradiator.init.push(function( app, undefined ) {
 		stop: function( obj ) {
 			return templates.stop({
 				id: obj.id,
-				color: obj.getColor(),
-				pos: obj.getPos() + "px"
+				color: obj.get('color'),
+				pos: obj.get('pos')
 			});
 		}
 	};

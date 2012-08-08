@@ -38,9 +38,39 @@ gradiator.init.push(function(app, undefined) {
 		core.select.stop( app.selected.layer, id );
 	});
 
+	var isNumberKey = function(e) {
+		if (e.keyCode != 46 && e.keyCode > 31 &&
+			(e.keyCode < 48 || e.keyCode > 57)) {
+			return false;
+		}
+		return true;
+	};
+
 	$$.editor.settings.position.input.change(function() {
-		var pos = $(this).val();
-		app.selected.stop.setPos(pos);
+		var $this = $(this);
+
+		var pos = Number($this.val());
+		app.selected.stop.set({pos: pos});
+	});
+
+	$$.editor.settings.position.input.keydown(function(e) {
+		var $this = $(this);
+
+		var raw = $this.val(),
+			pos = Number(raw);
+
+		if (isNumberKey(e)) {
+			pos += String.fromCharCode(e.keyCode);
+		} else {
+			return false;
+		}
+
+		app.selected.stop.set({pos: pos});
+		if (raw.length > 3) $this.val(raw.slice(0,2));
+		if (pos > 100) {
+			$this.val(100);
+			return false;
+		} else if (pos < 0) $this.val(0);
 	});
 
 });

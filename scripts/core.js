@@ -55,6 +55,17 @@ gradiator.init.push(function( app, undefined ) {
 		}));
 	};
 
+	Layer.prototype.getStops = function() {
+		var results = [];
+		for (var i = 0, stop; stop = this.stops[i]; i++) {
+			results.push([
+				stop.get('color'),
+				stop.pos
+			]);
+		}
+		return results;
+	};
+
 	var Stop = function( settings ) {
 
 		this.layer = settings.layer;
@@ -67,28 +78,50 @@ gradiator.init.push(function( app, undefined ) {
 		};
 		this.pos = settings.pos;
 
-		this.setColor = function(color) {
-			this.color = Color.convert(color, 'object');
-		};
-		this.getColor = function(type) {
-			type = type || 'rgba';
-			return Color.convert(this.color, type);
-		};
-
-		// Set color
-		this.setColor(settings.color);
-
-		this.setPos = function(pos) {
-			this.pos = pos;
-			ui.stop(this).move(pos);
-		};
-		this.getPos = function() {
-			var max = ui.$$.editor.slider.el.width();
-			return this.pos * max / 100;
-		};
+		this.set({
+			color: settings.color,
+			pos: settings.pos
+		});
 
 		ui.add.stop(this);
 
+	};
+
+	Stop.prototype.set = function( _settings ) {
+
+		var settings = defaults(_settings, {
+			pos: undefined,
+			color: undefined,
+			alpha: undefined
+		});
+
+		if (settings.pos !== undefined) {
+			if (settings.pos > 100) settings.pos = 100;
+			else if (settings.pos < 0) settings.pos = 0;
+			else settings.pos = Math.round(settings.pos);
+			this.pos = settings.pos;
+			ui.stop(this).move(this.pos);
+		}
+
+		if (settings.color !== undefined) {
+			this.color = Color.convert(settings.color, 'object');
+		}
+
+		if (settings.alpha !== undefined) {
+			this.color.a = settings.alpha;
+		}
+
+	};
+
+	Stop.prototype.get = function( type ) {
+		switch (type) {
+			case 'color':
+				type = arguments[1] || 'rgba';
+				return Color.convert(this.color, type);
+			case 'pos':
+				var max = ui.$$.editor.slider.el.width();
+				return (this.pos * max / 100) + "px";
+		}
 	};
 
 
@@ -144,7 +177,7 @@ gradiator.init.push(function( app, undefined ) {
 
 	// Generate Gradient
 
-	var gradient = {
+	core.gradient = {
 		render: function ( _settings ) {
 			var settings = defaults(_settings, {
 				gradient: false,
@@ -165,6 +198,20 @@ gradiator.init.push(function( app, undefined ) {
 			// Accepted colorFormats:
 			// hex, rgb, hsl
 
+			var stops = settings.gradient.getStops(),
+				output = "-webkit-linear-gradient(left, ";
+
+			for (var i = 0; i < stops.length; i++) {
+				var stop = stops[i];
+				if (i == stops.length - 1) {
+					output += stop[0] + " " + stop[1] + ")";
+				} else {
+					output += stop[0] + " " + stop[1] + ", ";
+				}
+			}
+
+			return output;
+
 		}
 
 	};
@@ -179,7 +226,7 @@ gradiator.init.push(function( app, undefined ) {
 		var results = {};
 		for (var key in def) {
 			if (typeof(def[key]) == 'object') {
-				results[key] = def(user[key], def[key]);
+				results[key] = defaults(user[key], def[key]);
 			} else if (user.hasOwnProperty(key)) {
 				results[key] = user[key];
 			} else {
