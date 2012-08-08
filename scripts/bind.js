@@ -33,11 +33,6 @@ gradiator.init.push(function(app, undefined) {
 		Editor
 	*****************************/
 
-	$$.editor.slider.stops.el.on('click', '.color-stop', function() {
-		var id = $(this).data('id');
-		core.select.stop( app.selected.layer, id );
-	});
-
 	var isNumberKey = function(e) {
 		if (e.keyCode != 46 && e.keyCode > 31 &&
 			(e.keyCode < 48 || e.keyCode > 57)) {
@@ -72,5 +67,8 @@ gradiator.init.push(function(app, undefined) {
 			return false;
 		} else if (pos < 0) $this.val(0);
 	});
+
+	$$.editor.slider.stops.el.on('mousedown', '.color-stop', ui.mouse.down);
+	$(document).mouseup(ui.mouse.up);
 
 });

@@ -101,6 +101,7 @@ gradiator.init.push(function( app, undefined ) {
 			else settings.pos = Math.round(settings.pos);
 			this.pos = settings.pos;
 			ui.stop(this).move(this.pos);
+			ui.settings.update(this);
 		}
 
 		if (settings.color !== undefined) {
@@ -119,7 +120,7 @@ gradiator.init.push(function( app, undefined ) {
 				type = arguments[1] || 'rgba';
 				return Color.convert(this.color, type);
 			case 'pos':
-				var max = ui.$$.editor.slider.el.width();
+				var max = ui.$$.editor.slider.width;
 				return (this.pos * max / 100) + "px";
 		}
 	};

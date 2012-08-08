@@ -8,7 +8,9 @@
 
 gradiator.init.push(function( app, undefined ) {
 
-	var ui = app.ui;
+	var ui = app.ui,
+		core = app.core,
+		selected = app.selected;
 
 	// Cache elements
 
@@ -18,6 +20,7 @@ gradiator.init.push(function( app, undefined ) {
 			preview: $('#gradient-preview .gradient'),
 			slider: {
 				el: $('#gradient-slider'),
+				width: $('#gradient-slider').width(),
 				stops: {
 					el: $('#gradient-slider .color-stops'),
 					selected: function() {
@@ -136,6 +139,32 @@ gradiator.init.push(function( app, undefined ) {
 			}
 		};
 	};
+
+
+
+	// Mouse movements
+	ui.mouse = {
+		offset: 0,
+		max: $$.editor.slider.width,
+		down: function() {
+			var id = $(this).data('id');
+			core.select.stop( app.selected.layer, id );
+
+			ui.mouse.offset = $$.editor.slider.el.offset().left;
+			document.onmousemove = ui.mouse.move;
+		},
+		up: function() {
+			document.onmousemove = null;
+		},
+		move: function(e) {
+			var raw = e.clientX - ui.mouse.offset;
+			if (raw > ui.mouse.max) raw = ui.mouse.max;
+			else if (raw < 0) raw = 0;
+			var pos = Math.round(raw / ui.mouse.max * 100);
+			selected.stop.set({pos: pos});
+		}
+	};
+
 
 
 	// Locals
