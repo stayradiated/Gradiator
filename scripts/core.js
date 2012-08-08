@@ -44,7 +44,6 @@ gradiator.init.push(function( app, undefined ) {
 			color: settings.color,
 			layer: this
 		}));
-
 	};
 
 	var Stop = function( settings ) {
@@ -52,19 +51,22 @@ gradiator.init.push(function( app, undefined ) {
 		this.layer = settings.layer;
 		this.id = settings.id;
 		this.color = {
-			a: 100,
+			a: 1,
 			r: 255,
 			g: 255,
 			b: 255
 		};
 		this.pos = settings.pos;
 
-		this.setColor = function() {
-
+		this.setColor = function(color) {
+			this.color = Color.convert(color, 'object');
 		};
 		this.getColor = function() {
-			return this.color;
+			return Color.convert(this.color, 'rgba');
 		};
+
+		// Set color
+		this.setColor(settings.color);
 
 		this.getPos = function() {
 			var max = ui.$$.editor.slider.el.width();
@@ -131,7 +133,6 @@ gradiator.init.push(function( app, undefined ) {
 
 		var results = {};
 		for (var key in def) {
-			console.log(key, user.hasOwnProperty(key));
 			if (typeof(def[key]) == 'object') {
 				results[key] = def(user[key], def[key]);
 			} else if (user.hasOwnProperty(key)) {
@@ -140,7 +141,7 @@ gradiator.init.push(function( app, undefined ) {
 				results[key] = def[key];
 			}
 		}
-		console.log(user, def,results);
+
 		return results;
 
 	};
@@ -153,16 +154,16 @@ gradiator.init.push(function( app, undefined ) {
 		layers.push( new Layer({name: 'Blue Button'}) );
 		select.layer( layers[0] );
 		layers[0].addStop({
-			color: 'lightblue',
+			color: '#bada55',
 			pos: 0
 		});
 		layers[0].addStop({
-			color: 'lightgreen',
-			pos: 100
+			color: 'rgba(200,100,0,0.5)',
+			pos: 75
 		});
 		layers[0].addStop({
-			color: 'red',
-			pos: 50
+			color: 'lightblue',
+			pos: 100
 		});
 	};
 
