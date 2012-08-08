@@ -162,6 +162,7 @@ gradiator.init.push(function( app, undefined ) {
 			else if (raw < 0) raw = 0;
 			var pos = Math.round(raw / ui.mouse.max * 100);
 			selected.stop.set({pos: pos});
+			gradiator.ui.$$.editor.preview[0].style.background = gradiator.core.gradient.render({gradient: gradiator.selected.layer});
 		}
 	};
 

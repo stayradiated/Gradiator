@@ -205,9 +205,9 @@ gradiator.init.push(function( app, undefined ) {
 			for (var i = 0; i < stops.length; i++) {
 				var stop = stops[i];
 				if (i == stops.length - 1) {
-					output += stop[0] + " " + stop[1] + ")";
+					output += stop[0] + " " + stop[1] + "%)";
 				} else {
-					output += stop[0] + " " + stop[1] + ", ";
+					output += stop[0] + " " + stop[1] + "%, ";
 				}
 			}
 
