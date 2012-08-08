@@ -108,6 +108,15 @@ gradiator.init.push(function( app, undefined ) {
 		}
 	};
 
+	ui.stop = function( stop ) {
+		return {
+			move: function() {
+				var $stop = $$.editor.slider.stops.el.find('[data-id=' + stop.id + ']');
+				$stop.css('left', stop.getPos() + "px");
+			}
+		};
+	};
+
 
 	// Locals
 

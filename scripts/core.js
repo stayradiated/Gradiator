@@ -69,6 +69,10 @@ gradiator.init.push(function( app, undefined ) {
 		// Set color
 		this.setColor(settings.color);
 
+		this.setPos = function(pos) {
+			this.pos = pos;
+			ui.stop(this).move(pos);
+		};
 		this.getPos = function() {
 			var max = ui.$$.editor.slider.el.width();
 			return this.pos * max / 100;
