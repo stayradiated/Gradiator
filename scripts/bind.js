@@ -38,4 +38,9 @@ gradiator.init.push(function(app, undefined) {
 		core.select.stop( app.selected.layer, id );
 	});
 
+	$$.editor.settings.position.input.change(function() {
+		var pos = $(this).val();
+		app.selected.stop.setPos(pos);
+	});
+
 });
