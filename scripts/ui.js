@@ -29,12 +29,9 @@ gradiator.init.push(function( app, undefined ) {
 					all: function() {
 						return $$.editor.slider.stops.el.find('.color-stop');
 					},
-					get: function( id ) {
-						return $$.editor.slider.stops.el.find('[data-id='+id+']');
-					},
 					select: function( id ) {
 						$$.editor.slider.stops.selected().removeClass('selected');
-						var stop = $$.editor.slider.stops.get(id);
+						var stop = ui.get.stop(id);
 						stop.addClass('selected');
 						return stop;
 					}
@@ -133,11 +130,23 @@ gradiator.init.push(function( app, undefined ) {
 
 	ui.stop = function( stop ) {
 		return {
+			update: function() {
+				// Get stop
+				var $this = ui.get.stop( stop.id );
+				// Replace it with updated version
+				$this.replaceWith(draw.stop( stop ));
+				// Re-add selected class
+				ui.get.stop( stop.id ).addClass('selected');
+			},
 			move: function() {
 				var $stop = $$.editor.slider.stops.el.find('[data-id=' + stop.id + ']');
 				$stop.css('left', stop.get('pos'));
 			}
 		};
+	};
+	
+	ui.preview = function() {
+		ui.$$.editor.preview[0].style.background = gradiator.selected.layer.render();
 	};
 
 
@@ -162,7 +171,6 @@ gradiator.init.push(function( app, undefined ) {
 			else if (raw < 0) raw = 0;
 			var pos = Math.round(raw / ui.mouse.max * 100);
 			selected.stop.set({pos: pos});
-			gradiator.ui.$$.editor.preview[0].style.background = gradiator.core.gradient.render({gradient: gradiator.selected.layer});
 		}
 	};
 
@@ -205,6 +213,11 @@ gradiator.init.push(function( app, undefined ) {
 		},
 		stop: function( obj ) {
 			$$.editor.slider.stops.el.append(draw.stop(obj));
+		}
+	};
+	ui.get = {
+		stop: function( id ) {
+			return $$.editor.slider.stops.el.find('[data-id='+id+']');
 		}
 	};
 

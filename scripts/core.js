@@ -39,7 +39,35 @@ gradiator.init.push(function( app, undefined ) {
 		ui.add.layer(this);
 
 	};
+		
+	// Convert gradient to CSS (or other format)
+	Layer.prototype.render = function( _settings ) {
+		var settings = defaults(_settings, {
+			template: [],
+			fallback: false,
+			colorFormat: 'hex'
+		});
 
+		// template: 	webkit, webkit_legacy, moz, ms, ms_legacy, o, standard, svg, sass, scss, less
+		// fallback: 	false (no fallback), first, last, average
+		// colorFormat: hex, rgb, hsl
+
+		var stops = this.getStops(),
+			output = "-webkit-linear-gradient(left, ";
+
+		for (var i = 0; i < stops.length; i++) {
+			var stop = stops[i];
+			if (i == stops.length - 1) {
+				output += stop[0] + " " + stop[1] + "%)";
+			} else {
+				output += stop[0] + " " + stop[1] + "%, ";
+			}
+		}
+
+		return output;
+	};
+
+	// Add a color-stop to a gradient
 	Layer.prototype.addStop = function( _settings ) {
 
 		settings = defaults(_settings, {
@@ -54,7 +82,9 @@ gradiator.init.push(function( app, undefined ) {
 			layer: this
 		}));
 	};
-
+	
+	// Get an array of all color-stops
+	// [["#ffffff", 0],["808080", 50],["#000000", 100],[<color>, <pos>]]
 	Layer.prototype.getStops = function() {
 		var results = [];
 		for (var i = 0, stop; stop = this.stops[i]; i++) {
@@ -64,6 +94,19 @@ gradiator.init.push(function( app, undefined ) {
 			]);
 		}
 		return results;
+	};
+	
+	// Sort stops by position
+	Layer.prototype.sortStops = function() {
+		var order = {
+			old: this.stops,
+			new: []
+		};
+		order.new = order.old.sort(function(a,b) {
+			return a.pos - b.pos;
+		});
+		this.stops = order.new;
+		return this.stops;
 	};
 
 	var Stop = function( settings ) {
@@ -94,14 +137,25 @@ gradiator.init.push(function( app, undefined ) {
 			color: undefined,
 			alpha: undefined
 		});
-
+		
+		// Set position
 		if (settings.pos !== undefined) {
+			
+			// Make sure it is within 0 - 100
 			if (settings.pos > 100) settings.pos = 100;
 			else if (settings.pos < 0) settings.pos = 0;
+			
+			// And that is a whole number
 			else settings.pos = Math.round(settings.pos);
+			
+			// Update pos and sort stops
 			this.pos = settings.pos;
+			this.layer.sortStops();
+			
+			// Update UI
 			ui.stop(this).move(this.pos);
 			ui.settings.update(this);
+			ui.preview();
 		}
 
 		if (settings.color !== undefined) {
@@ -109,7 +163,9 @@ gradiator.init.push(function( app, undefined ) {
 		}
 
 		if (settings.alpha !== undefined) {
+			settings.alpha /= 100;
 			this.color.a = settings.alpha;
+			ui.stop(this).update();
 		}
 
 	};
@@ -176,47 +232,6 @@ gradiator.init.push(function( app, undefined ) {
 		}
 	};
 
-	// Generate Gradient
-
-	core.gradient = {
-		render: function ( _settings ) {
-			var settings = defaults(_settings, {
-				gradient: false,
-				template: [],
-				fallback: false,
-				colorFormat: 'hex'
-			});
-
-			// Gradient must be a Gradient object.
-
-			// Accepted templates:
-			// webkit, webkit_legacy, moz, ms, ms_legacy, o, standard, svg
-			// sass, scss, less
-
-			// Accepted fallbacks:
-			// false (no fallback), first, last, average
-
-			// Accepted colorFormats:
-			// hex, rgb, hsl
-
-			var stops = settings.gradient.getStops(),
-				output = "-webkit-linear-gradient(left, ";
-
-			for (var i = 0; i < stops.length; i++) {
-				var stop = stops[i];
-				if (i == stops.length - 1) {
-					output += stop[0] + " " + stop[1] + "%)";
-				} else {
-					output += stop[0] + " " + stop[1] + "%, ";
-				}
-			}
-
-			return output;
-
-		}
-
-	};
-
 	// Utils
 
 	// Merges two objects with priority to user
@@ -258,6 +273,7 @@ gradiator.init.push(function( app, undefined ) {
 			color: 'lightblue',
 			pos: 100
 		});
+		select.stop( selected.layer, 0 );
 	};
 
 });
