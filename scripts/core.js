@@ -238,7 +238,9 @@ gradiator.init.push(function( app, undefined ) {
 		var settings = defaults(_settings, {
 			pos: undefined,
 			color: undefined,
-			alpha: undefined
+			alpha: undefined,
+			updateStop: true,
+			updateGradient: true
 		});
 		
 		// Set position
@@ -254,24 +256,25 @@ gradiator.init.push(function( app, undefined ) {
 			// Update pos and sort stops
 			this.pos = settings.pos;
 			this.layer.sortStops();
-			
-			// Update UI
-			ui.stop(this).move(this.pos);
 		}
 
 		if (settings.color !== undefined) {
 			this.color = Color.convert(settings.color, 'object');
-			ui.stop(this).update();
 		}
 
 		if (settings.alpha !== undefined) {
 			settings.alpha /= 100;
 			this.color.a = settings.alpha;
-			ui.stop(this).update();
 		}
 		
-		ui.settings.update(this);
-		ui.preview(this.layer);
+		// Update UI
+		if (settings.updateStop) {
+			ui.stop(this).update();
+		}
+		if (settings.updateGradient) {
+			ui.settings.update(this);
+			ui.preview(this.layer);
+		}
 
 	};
 	

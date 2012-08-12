@@ -145,12 +145,10 @@ gradiator.init.push(function( app, undefined ) {
 				var $this = ui.get.stop( stop.id );
 				// Replace it with updated version
 				$this.replaceWith(draw.stop( stop ));
+				// Move it into the right spot
+				$this.css('left', stop.get('pos'));
 				// Re-add selected class
 				ui.get.stop( stop.id ).addClass('selected');
-			},
-			move: function() {
-				var $stop = $$.editor.slider.stops.el.find('[data-id=' + stop.id + ']');
-				$stop.css('left', stop.get('pos'));
 			},
 			add: function(e) {
 				if ($(e.target).is('.track')) {
@@ -175,10 +173,12 @@ gradiator.init.push(function( app, undefined ) {
 	// Mouse movements
 	ui.mouse = {
 		offset: 0,
-		max: $$.editor.slider.width,
+		active: null,
+		max: $$.editor.slider.width - 3,
 		down: function() {
 			var id = $(this).data('id');
 			core.select.stop( app.selected.layer, id );
+			ui.mouse.active = $(this);
 			document.onmousemove = ui.mouse.move;
 		},
 		up: function() {
@@ -188,8 +188,9 @@ gradiator.init.push(function( app, undefined ) {
 			var raw = e.clientX - ui.mouse.offset;
 			if (raw > ui.mouse.max) raw = ui.mouse.max;
 			else if (raw < 0) raw = 0;
+			ui.mouse.active.css('left', raw);
 			var pos = Math.round(raw / ui.mouse.max * 100);
-			selected.stop.set({pos: pos});
+			selected.stop.set({pos: pos, updateStop: false});
 		}
 	};
 	
