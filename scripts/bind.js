@@ -105,6 +105,18 @@ gradiator.init.push(function(app, undefined) {
 			app.selected.stop.set({alpha: val});
 		});
 	});
+	
+	$$.editor.settings.color.input.change(function() {
+		app.selected.stop.set({color: $(this).val()});
+	});
+	
+	$$.editor.settings.remove.button.click(function() {
+		app.selected.stop.remove();
+	});
+	
+	$$.sidebar.opacity.change(function() {
+		app.selected.layer.set({opacity: $(this).val()});
+	});
 
 	$$.editor.slider.stops.el.on('mousedown', '.color-stop', ui.mouse.down);
 	$(document).mouseup(ui.mouse.up);

@@ -12,7 +12,10 @@ gradiator.init.push(function( app, undefined ) {
 		ui = app.ui;
 
 	/* Constructors */
-
+	
+	/*
+		Layer
+	*/
 	var Layer = function( _settings ) {
 
 		settings = defaults(_settings, {
@@ -25,6 +28,7 @@ gradiator.init.push(function( app, undefined ) {
 		this.id = layers.length + 1;
 		this.name = settings.name;
 		this.type = settings.type;
+		this.opacity = 100;
 
 		// Angle between 0 and 360
 		this.direction = 0;
@@ -89,7 +93,7 @@ gradiator.init.push(function( app, undefined ) {
 		var results = [];
 		for (var i = 0, stop; stop = this.stops[i]; i++) {
 			results.push([
-				stop.get('color'),
+				stop.get('colorWithLayerStyles'),
 				stop.pos
 			]);
 		}
@@ -108,7 +112,22 @@ gradiator.init.push(function( app, undefined ) {
 		this.stops = order.new;
 		return this.stops;
 	};
-
+	
+	// Change layer values
+	Layer.prototype.set = function( _settings ) {
+		var settings = defaults(_settings, {
+			opacity: undefined
+		});
+		if (settings.opacity !== undefined) {
+			this.opacity = settings.opacity;
+			ui.preview();
+		}
+	};
+	
+	
+	/*
+		Color Stop
+	*/
 	var Stop = function( settings ) {
 
 		this.layer = settings.layer;
@@ -129,7 +148,8 @@ gradiator.init.push(function( app, undefined ) {
 		ui.add.stop(this);
 
 	};
-
+	
+	// Set value
 	Stop.prototype.set = function( _settings ) {
 
 		var settings = defaults(_settings, {
@@ -154,12 +174,11 @@ gradiator.init.push(function( app, undefined ) {
 			
 			// Update UI
 			ui.stop(this).move(this.pos);
-			ui.settings.update(this);
-			ui.preview();
 		}
 
 		if (settings.color !== undefined) {
 			this.color = Color.convert(settings.color, 'object');
+			ui.stop(this).update();
 		}
 
 		if (settings.alpha !== undefined) {
@@ -167,17 +186,39 @@ gradiator.init.push(function( app, undefined ) {
 			this.color.a = settings.alpha;
 			ui.stop(this).update();
 		}
+		
+		ui.settings.update(this);
+		ui.preview();
 
 	};
-
+	
+	// Get value
 	Stop.prototype.get = function( type ) {
 		switch (type) {
 			case 'color':
 				type = arguments[1] || 'rgba';
 				return Color.convert(this.color, type);
+			case 'colorWithLayerStyles':
+			type = arguments[1] || 'rgba';
+				return Color.convert({
+					r: this.color.r,
+					g: this.color.g,
+					b: this.color.b,
+					a: this.color.a / (100/this.layer.opacity)
+				}, type);
 			case 'pos':
-				var max = ui.$$.editor.slider.width;
+				var max = ui.$$.editor.slider.width - 3;
 				return (this.pos * max / 100) + "px";
+		}
+	};
+	
+	// Remove stop
+	Stop.prototype.remove = function() {
+		if (this.layer.stops.length > 2) {
+			var index = this.layer.stops.indexOf(this);
+			this.layer.stops.splice(index, 1);
+			ui.get.stop(this.id).remove();
+			ui.preview();
 		}
 	};
 
@@ -273,6 +314,24 @@ gradiator.init.push(function( app, undefined ) {
 			color: 'lightblue',
 			pos: 100
 		});
+		layers[1].addStop({
+			color: 'rgba(0,100,0,1)',
+			pos: 0
+		});
+		layers[1].addStop({
+			color: 'lightblue',
+			pos: 100
+		});
+		
+		layers[2].addStop({
+			color: 'rgba(200,100,0,1)',
+			pos: 0
+		});
+		layers[2].addStop({
+			color: 'green',
+			pos: 75
+		});
+		
 		select.stop( selected.layer, 0 );
 	};
 

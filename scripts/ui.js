@@ -60,6 +60,7 @@ gradiator.init.push(function( app, undefined ) {
 		},
 		sidebar: {
 			el: $('#sidebar'),
+			opacity: $('#sidebar .opacity input'),
 			layers: {
 				el: $('#layers'),
 				all: function() {
@@ -92,6 +93,14 @@ gradiator.init.push(function( app, undefined ) {
 			// Update 'selected' class name
 			$$.sidebar.layers.selected().removeClass('selected');
 			$$.sidebar.layers.el.find('[data-id=' + id + ']').addClass('selected');
+			
+			// Update stops
+			$$.editor.slider.stops.all().remove();
+			var stops = core.get.layer(id).stops;
+			for (var i = 0; i < stops.length; i++) {
+				ui.add.stop(stops[i]);
+			}
+			ui.preview();
 		},
 
 		// Select a stop in a gradient
