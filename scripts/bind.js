@@ -118,6 +118,7 @@ gradiator.init.push(function(app, undefined) {
 		app.selected.layer.set({opacity: $(this).val()});
 	});
 
+	$$.editor.slider.el.click(ui.stop().add);
 	$$.editor.slider.stops.el.on('mousedown', '.color-stop', ui.mouse.down);
 	$(document).mouseup(ui.mouse.up);
 

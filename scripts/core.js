@@ -124,6 +124,56 @@ gradiator.init.push(function( app, undefined ) {
 		}
 	};
 	
+	// Get color at position
+	Layer.prototype.blend = function( x ) {
+		
+		x = Number(x);
+		
+		var left = {
+			pos: -1,
+			stop: false,
+			percent: 0
+		}, right = {
+			pos: 101,
+			stop:  false,
+			percent: 0
+		};
+			
+		// Get the 2 closest stops to the specified position
+		for (var i = 0; i < this.stops.length; i++) {
+			var stop = this.stops[i];
+			if (stop.pos < x && stop.pos > left.pos) {
+				left.pos = stop.pos;
+				left.stop = stop;
+			} else if (stop.pos > x && stop.pos < right.pos) {
+				right.pos = stop.pos;
+				right.stop = stop;
+			}
+		}
+		
+		// If there is no stop to the left or right
+		if (!left.stop) {
+			return right.stop.get('color');
+		} else if (!right.stop) {
+			return left.stop.get('color');
+		}
+		
+		// Calculate percentages	
+		right.percent = Math.abs(1 / ((right.pos - left.pos) / (x - left.pos)));
+		left.percent = 1 - right.percent;
+		
+		// Blend colors!
+		var blend = {
+			r: Math.round((left.stop.color.r * left.percent) + (right.stop.color.r * right.percent)),
+			g: Math.round((left.stop.color.g * left.percent) + (right.stop.color.g * right.percent)),
+			b: Math.round((left.stop.color.b * left.percent) + (right.stop.color.b * right.percent)),
+			a: Math.round(((left.stop.color.a * left.percent) + (right.stop.color.a * right.percent)) * 100) / 100
+		}
+		
+		return Color.convert(blend, 'rgba');
+
+	};
+	
 	
 	/*
 		Color Stop
@@ -188,7 +238,7 @@ gradiator.init.push(function( app, undefined ) {
 		}
 		
 		ui.settings.update(this);
-		ui.preview();
+		ui.preview(this.layer);
 
 	};
 	
@@ -301,7 +351,7 @@ gradiator.init.push(function( app, undefined ) {
 		layers.push( new Layer({name: 'Green Button'}) );
 		layers.push( new Layer({name: 'Red Button'}) );
 		layers.push( new Layer({name: 'Blue Button'}) );
-		select.layer( layers[0] );
+		
 		layers[0].addStop({
 			color: '#bada55',
 			pos: 0
@@ -314,6 +364,7 @@ gradiator.init.push(function( app, undefined ) {
 			color: 'lightblue',
 			pos: 100
 		});
+		
 		layers[1].addStop({
 			color: 'rgba(0,100,0,1)',
 			pos: 0
@@ -332,6 +383,7 @@ gradiator.init.push(function( app, undefined ) {
 			pos: 75
 		});
 		
+		select.layer( layers[0] );
 		select.stop( selected.layer, 0 );
 	};
 

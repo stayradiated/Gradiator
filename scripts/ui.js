@@ -150,12 +150,23 @@ gradiator.init.push(function( app, undefined ) {
 			move: function() {
 				var $stop = $$.editor.slider.stops.el.find('[data-id=' + stop.id + ']');
 				$stop.css('left', stop.get('pos'));
+			},
+			add: function(e) {
+				if ($(e.target).is('.track')) {
+					var raw = e.clientX - ui.mouse.offset,
+						pos = Math.round(raw / ui.mouse.max * 100);
+					app.selected.layer.addStop({
+						pos: pos,
+						color: app.selected.layer.blend(pos)
+					});
+				}
 			}
 		};
 	};
 	
-	ui.preview = function() {
-		ui.$$.editor.preview[0].style.background = gradiator.selected.layer.render();
+	ui.preview = function( layer ) {
+		layer = layer || gradiator.selected.layer;
+		ui.$$.editor.preview[0].style.background = layer.render();
 	};
 
 
@@ -167,8 +178,6 @@ gradiator.init.push(function( app, undefined ) {
 		down: function() {
 			var id = $(this).data('id');
 			core.select.stop( app.selected.layer, id );
-
-			ui.mouse.offset = $$.editor.slider.el.offset().left;
 			document.onmousemove = ui.mouse.move;
 		},
 		up: function() {
@@ -182,6 +191,9 @@ gradiator.init.push(function( app, undefined ) {
 			selected.stop.set({pos: pos});
 		}
 	};
+	
+	// Set offset
+	ui.mouse.offset = $$.editor.slider.el.offset().left;
 
 
 
