@@ -78,13 +78,20 @@ gradiator.init.push(function( app, undefined ) {
 			color: 'blue',
 			pos: 0
 		});
-
+		
+		// Create ID
+		var id = this.stops.length;
+		
+		// Make a new stop
 		this.stops.push( new Stop( {
-			id: this.stops.length,
+			id: id,
 			pos: settings.pos,
 			color: settings.color,
 			layer: this
 		}));
+		
+		// Select it
+		select.stop( this, id );
 	};
 	
 	// Get an array of all color-stops
@@ -172,6 +179,26 @@ gradiator.init.push(function( app, undefined ) {
 		
 		return Color.convert(blend, 'rgba');
 
+	};
+	
+	// Generate fallback
+	Layer.prototype.average = function() {
+		var average = {
+			r: 0,
+			g: 0,
+			b: 0
+		};
+		var length = this.stops.length;
+		for (var i = 0; i < length; i++) {
+			var stop = this.stops[i];
+			average.r += stop.color.r;
+			average.g += stop.color.g;
+			average.b += stop.color.b;
+		}
+		average.r = Math.round(average.r / length);
+		average.g = Math.round(average.g / length);
+		average.b = Math.round(average.b / length);
+		return Color.convert(average, 'hex');
 	};
 	
 	
