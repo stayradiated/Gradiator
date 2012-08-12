@@ -201,6 +201,12 @@ gradiator.init.push(function( app, undefined ) {
 		return Color.convert(average, 'hex');
 	};
 	
+	// Rename layer
+	Layer.prototype.rename = function( newname ) {
+		this.name = newname;
+		ui.layer(this).update();
+	};
+	
 	
 	/*
 		Color Stop

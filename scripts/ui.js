@@ -133,6 +133,7 @@ gradiator.init.push(function( app, undefined ) {
 				} else {
 					el.addClass('disabled');
 				}
+				el.find('.name').html(layer.name);
 			}
 		};
 	};
